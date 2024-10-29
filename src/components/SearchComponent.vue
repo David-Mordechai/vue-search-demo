@@ -1,17 +1,23 @@
 <template>
-    <div :class="searchStore.subCriteria !== undefined ? 'wrapperSubcriteria' : 'wrapper'">
-        <SearchTextComponent class="search" />
-        <SelectedComponent class="selected" v-if="searchStore.subCriteria !== undefined" />
-
-        <div class="filterIcon">
-            <v-btn-toggle v-model="toggle_exclusive">
-                <v-btn variant="text"><v-icon icon="mdi-filter" /></v-btn>
-            </v-btn-toggle>
-        </div>
-
-        <CheapsComponent v-if="toggle_exclusive === 0" class="cheaps" />
-        <SearchResultComponent class="searchResult" />
-    </div>
+    <v-container class="container">
+        <v-row align="center" justify="center" class="searchRow">
+            <v-col>
+                <SearchTextComponent />
+            </v-col>
+            <v-col cols="2" v-if="searchStore.subCriteria !== undefined">
+                <SelectedComponent />
+            </v-col>
+            <v-col cols="1" align="center">
+                <v-btn @click="toggle" variant="plain" density="compact" slim size="x-large" icon="mdi-filter"/>
+            </v-col>
+        </v-row>
+        <v-row no-gutters v-if="toggleSubSearchPanel">
+            <CheapsComponent />
+        </v-row>
+        <v-row no-gutters>
+            <SearchResultComponent />
+        </v-row>
+    </v-container>
 
 </template>
 
@@ -23,47 +29,19 @@ import SearchResultComponent from './SearchResultComponent.vue';
 import { useSearchStore } from '../stores/searchStore';
 import { ref } from 'vue';
 const searchStore = useSearchStore();
-let toggle_exclusive = ref(undefined)
+let toggleSubSearchPanel = ref<boolean>(false)
+
+function toggle(){
+    toggleSubSearchPanel.value = !toggleSubSearchPanel.value
+}
 </script>
 
 <style scoped>
-.wrapper {
-    display: grid;
-    grid-template-areas:
-        "srch srch srch srch flti"
-        "chps chps chps chps chps"
-        "rslt rslt rslt rslt rslt";
+.container{
+    width: 550px;
 }
-
-.wrapperSubcriteria {
-    display: grid;
-    grid-template-areas:
-        "srch srch srch slct flti"
-        "chps chps chps chps chps"
-        "rslt rslt rslt rslt rslt";
-}
-
-.search {
-    grid-area: srch;
-}
-
-.selected {
-    grid-area: slct;
-    align-self: center;
-    justify-self: center;
-}
-
-.filterIcon {
-    grid-area: flti;
-    align-self: center;
-    justify-self: end;
-}
-
-.cheaps {
-    grid-area: chps;
-}
-
-.searchResult {
-    grid-area: rslt;
+.searchRow{
+    text-align: center;
+    justify-content: center;
 }
 </style>

@@ -8,9 +8,12 @@ function Search(input: string){
 
 <template>
   <v-text-field v-debounce:400ms="Search"
-      label="Search"
+  density="compact"
       placeholder="Type to search..."
-      variant="outlined"
+      append-inner-icon="mdi-magnify"
+      hide-details="auto"
+      single-line
+      variant="solo"
     />
 </template>
 

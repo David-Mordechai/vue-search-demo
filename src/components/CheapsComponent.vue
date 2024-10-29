@@ -16,8 +16,7 @@ const searchStore = useSearchStore();
 
 <style scoped>
 .wrapper {
-    width: 493px;
-    margin-bottom: 5px;
+    width: 550px;
     padding-left: 10px;
 }
 </style>
