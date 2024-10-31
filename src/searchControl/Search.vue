@@ -22,11 +22,11 @@
 </template>
 
 <script setup lang="ts">
-import SearchTextComponent from './SearchTextComponent.vue';
-import SelectedComponent from './SelectedComponent.vue';
-import CheapsComponent from './CheapsComponent.vue';
-import SearchResultComponent from './SearchResultComponent.vue';
-import { useSearchStore } from '../stores/searchStore';
+import SearchTextComponent from './components/SearchTextField.vue';
+import SelectedComponent from './components/SelectedSubCriteria.vue';
+import CheapsComponent from './components/SubCriteries.vue';
+import SearchResultComponent from './components/SearchResultTable.vue';
+import { useSearchStore } from './stores/searchStore';
 import { ref } from 'vue';
 const searchStore = useSearchStore();
 let toggleSubSearchPanel = ref<boolean>(false)

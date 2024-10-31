@@ -130,5 +130,6 @@ export const useSearchStore = defineStore('search', () => {
             year: 2022,
         },
     ]
+    
     return { searchCriteria, subCriteria, subCriteries, searchResult }
 })

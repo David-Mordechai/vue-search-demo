@@ -11,7 +11,9 @@
 
 <script setup lang="ts">
 import { useSearchStore } from '../stores/searchStore';
+
 const searchStore = useSearchStore();
+
 </script>
 
 <style scoped>

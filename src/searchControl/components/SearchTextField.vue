@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useSearchStore } from '../stores/searchStore';
+
 const searchStore = useSearchStore();
+
 function Search(input: string){
   searchStore.searchCriteria = input;
 }
