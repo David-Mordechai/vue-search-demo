@@ -53,7 +53,6 @@ export const useSearchStore = defineStore('search', () => {
                 .some(value => String(value).toLowerCase()
                     .includes(searchCriteria.value!.toLowerCase())));
         }
-        
 
         searchResult.value = result;
     }
