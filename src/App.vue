@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import SearchComponent from './searchControl/Search.vue';
+import Search from './searchControl/Search.vue';
 
 </script>
 
 <template>
-  <SearchComponent/>
+  <Search/>
 </template>
 
 <style scoped>

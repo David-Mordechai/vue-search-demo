@@ -1,5 +1,5 @@
 <template>
-  <v-data-table-virtual fixed-header :headers="headers" :items="searchStore.searchResult" height="400" width="600" show-select
+  <v-data-table-virtual style="text-align: left;" fixed-header :headers="headers" :items="searchStore.searchResult" height="400" width="600" show-select
     item-value="name">
     <template v-slot:item.actions="{ item }">
       <v-icon class="me-2" size="small" @click="editItem(item)">mdi-pencil</v-icon>
