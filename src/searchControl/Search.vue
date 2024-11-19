@@ -2,20 +2,20 @@
     <v-container class="container">
         <v-row  justify="center" class="centerVerticalAlign">
             <v-col>
-                <SearchText />
+                <SearchText :searchStore=searchStore />
             </v-col>
             <v-col cols="2" v-if="searchStore.subCriteria !== undefined">
-                <SelectedSubCriteria />
+                <SelectedSubCriteria :searchStore=searchStore />
             </v-col>
             <v-col cols="1" class="centerVerticalAlign">
                 <v-btn @click="toggle" variant="plain" density="compact" slim size="x-large" icon="mdi-filter"/>
             </v-col>
         </v-row>
         <v-row no-gutters v-if="toggleSubSearchPanel">
-            <SubCriteriesList />
+            <SubCriteriesList :searchStore=searchStore />
         </v-row>
         <v-row no-gutters>
-            <SearchResultTable />
+            <SearchResultTable :searchStore=searchStore />
         </v-row>
     </v-container>
 </template>
@@ -25,9 +25,10 @@ import SearchText from './components/SearchTextField.vue';
 import SelectedSubCriteria from './components/SelectedSubCriteria.vue';
 import SubCriteriesList from './components/SubCriteriesList.vue';
 import SearchResultTable from './components/SearchResultTable.vue';
-import { useSearchStore } from './stores/searchStore';
 import { ref } from 'vue';
-const searchStore = useSearchStore();
+
+defineProps(["searchStore"])
+
 let toggleSubSearchPanel = ref<boolean>(false)
 
 function toggle(){
@@ -38,6 +39,7 @@ function toggle(){
 <style scoped>
 .container{
     width: 570px;
+    max-height: 500px;
 }
 
 .centerVerticalAlign{

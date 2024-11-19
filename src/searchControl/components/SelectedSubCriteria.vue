@@ -5,10 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { useSearchStore } from '../stores/searchStore';
-
-const searchStore = useSearchStore();
-
+defineProps(["searchStore"])
 </script>
 
 <style scoped>

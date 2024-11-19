@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { useSearchStore } from '../stores/searchStore';
 
-const searchStore = useSearchStore();
+const props = defineProps(["searchStore"])
 
 function Search(input: string){
-  searchStore.searchCriteria = input;
+  props.searchStore.searchCriteria = input;
 }
 </script>
 
