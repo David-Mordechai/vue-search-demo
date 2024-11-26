@@ -1,84 +1,86 @@
-<script lang="ts" setup>
-import { ref } from 'vue';
-
-// Define the item structure
-interface Item {
-  id: number;
-  name: string;
-  value: string;
-}
-
-// Sample data
-const items = ref<Item[]>([
-  { id: 1, name: 'Item 1', value: 'Value 1' },
-  { id: 2, name: 'Item 2', value: 'Value 2' },
-  { id: 3, name: 'Item 3', value: 'Value 3' },
-  { id: 4, name: 'Item 4', value: 'Value 4' },
-]);
-
-const selectedItems = ref<Item[]>([]); // Tracks selected items
-const lastSelectedIndex = ref<number | null>(null); // Tracks the last selected index for shift selection
-
-// Handle row click
-function handleRowClick(item: Item, index: number, event: MouseEvent): void {
-  if (event.shiftKey && lastSelectedIndex.value !== null) {
-    // Shift+Click: Select range of items
-    const start = Math.min(lastSelectedIndex.value, index);
-    const end = Math.max(lastSelectedIndex.value, index);
-    const range = items.value.slice(start, end + 1);
-    range.forEach((row) => {
-      if (!selectedItems.value.includes(row)) {
-        selectedItems.value.push(row);
-      }
-    });
-  } else if (event.ctrlKey || event.metaKey) {
-    // Ctrl+Click (or Cmd+Click on macOS): Toggle single item
-    if (selectedItems.value.includes(item)) {
-      selectedItems.value = selectedItems.value.filter((selected) => selected !== item);
-    } else {
-      selectedItems.value.push(item);
-    }
-  } else {
-    // Regular Click: Select single item and clear others
-    selectedItems.value = [item];
-  }
-
-  lastSelectedIndex.value = index; // Update the last selected index
-}
-
-// Check if a row is selected
-const isRowSelected = (item: Item): boolean => selectedItems.value.includes(item);
-</script>
-
 <template>
   <v-container>
     <v-data-table
+      :headers="headers"
       :items="items"
-      :headers="[
-        { title: 'Name', value: 'name' },
-        { title: 'Value', value: 'value' },
-      ]"
+      class="elevation-1"
+      dense
       item-value="id"
-      item-class="item-row"
+      item-key="id"
+      @dragstart:row="onDragStart"
+      draggable:row="true"
     >
-      <template v-slot:body="{ items }">
-        <tr
-          v-for="(item, index) in items"
-          :key="item.id"
-          :class="{ 'selected-row': isRowSelected(item) }"
-          @click="handleRowClick(item, index, $event)"
-        >
-          <td>{{ item.name }}</td>
-          <td>{{ item.value }}</td>
-        </tr>
-      </template>
     </v-data-table>
+
+    <div
+      class="drop-area"
+      @dragover.prevent
+      @drop="onDrop"
+      style="margin-top: 20px; padding: 20px; border: 1px dashed #aaa;"
+    >
+      <p>Drop here:</p>
+      <div v-if="droppedItem">
+        <p><strong>Name:</strong> {{ droppedItem.name }}</p>
+        <p><strong>Age:</strong> {{ droppedItem.age }}</p>
+      </div>
+    </div>
   </v-container>
 </template>
 
+<script>
+import { ref } from "vue";
+
+export default {
+  setup() {
+    // Data for table headers and items
+    const headers = ref([
+      { text: "Name", value: "name" },
+      { text: "Age", value: "age" },
+    ]);
+    const items = ref([
+      { id: 1, name: "Alice", age: 25 },
+      { id: 2, name: "Bob", age: 30 },
+      { id: 3, name: "Charlie", age: 35 },
+    ]);
+
+    // State for the dropped item
+    const droppedItem = ref(null);
+
+    // Methods for drag-and-drop
+    const onDragStart = (event, row) => {
+      event.dataTransfer.setData("application/json", JSON.stringify(row.item));
+    };
+
+    const onDrop = (event) => {
+      const data = event.dataTransfer.getData("application/json");
+      droppedItem.value = JSON.parse(data);
+    };
+
+    return {
+      headers,
+      items,
+      droppedItem,
+      onDragStart,
+      onDrop,
+    };
+  },
+};
+</script>
+
 <style scoped>
-.selected-row {
-  background-color: darkblue; /* Light teal for selection */
-  color: whitesmoke;
+.drop-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #f9f9f9; */
+}
+
+/* Ensure the row is draggable */
+.draggable-row {
+  cursor: grab; /* Change cursor to indicate draggable rows */
+}
+.draggable-row:hover {
+  background-color: rgb(var(--v-theme-code)); /* Add a hover effect for feedback */
 }
 </style>

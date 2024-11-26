@@ -39,7 +39,6 @@ function toggle(){
 <style scoped>
 .container{
     width: 600px;
-    max-height: 500px;
 }
 
 .centerVerticalAlign{
