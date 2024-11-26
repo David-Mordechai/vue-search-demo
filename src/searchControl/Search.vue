@@ -38,7 +38,7 @@ function toggle(){
 
 <style scoped>
 .container{
-    width: 570px;
+    width: 600px;
     max-height: 500px;
 }
 
