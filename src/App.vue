@@ -1,7 +1,7 @@
 <script setup  lang="ts">
 import Search from './searchControl/Search.vue';
 import { useSearchStore } from './searchControl/stores/searchStore';
-import test1 from './searchControl/test1.vue';
+import SnackbarDemo from './snackbarDemo.vue';
 
 const leftSearchStore = useSearchStore("leftSearch");
 const rightSearchStore  = useSearchStore("rightSearch");
@@ -11,7 +11,7 @@ const rightSearchStore  = useSearchStore("rightSearch");
   <Search :searchStore=leftSearchStore />
   <Search :searchStore=rightSearchStore />
 
-  <test1 />
+  <SnackbarDemo />
 </template>
 
 <style scoped>
